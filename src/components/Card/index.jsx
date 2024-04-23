@@ -1,15 +1,59 @@
 import { useContext } from 'react'
 import { ShoppingCartContext } from '../../context'
 import { PlusIcon } from '@heroicons/react/24/solid'
+import { CheckIcon } from '@heroicons/react/24/solid'
 
 const Card = ({ data }) => {
   const context = useContext(ShoppingCartContext)
 
+  // console.log("Data",data);
+
+  const showProduct = (productData) => {
+    context.closeCheckoutSideMenu()
+    context.openProductDetail()
+    context.setProductDetail(productData)
+    // console.log("ShowProduct",productData);
+  }
+
+  const addToCart = (event, productData) => {
+    event.stopPropagation()
+    context.setCartProducts([...context.cartProducts, productData])
+    // context.setCount(context.count + 1)
+    context.closeProductDetail()
+    context.openCheckoutSideMenu()
+    // console.log('Cart', context.cartProducts)
+  }
+
+  const renderIcon = (id) => {
+    const isInCart =
+      context.cartProducts.filter((product) => product.id === id).length > 0
+
+    if (isInCart) {
+      return (
+        <div
+          className='absolute top-0 right-0 flex justify-center items-center bg-green-300 w-6 h-6 rounded-full m-2 p-1'
+          onClick={(event) => event.stopPropagation()}
+        >
+          <CheckIcon className='h-6 w-6 text-black' />
+        </div>
+      )
+    } else {
+      return (
+        <div
+          className='absolute top-0 right-0 flex justify-center items-center bg-blue-200 w-6 h-6 rounded-full m-2 p-1'
+          onClick={(event) => addToCart(event, data)}
+        >
+          <PlusIcon className='h-6 w-6 text-black' />
+        </div>
+      )
+    }
+  }
+
   return (
-    <div 
+    <div
       className='bg-white cursor-pointer w-56 h-60 rounded-lg'
       onClick={() => {
-        context.openProductDetail()
+        showProduct(data)
       }}
     >
       <figure className='relative mb-2 w-full h-4/5'>
@@ -21,12 +65,7 @@ const Card = ({ data }) => {
           src={data.image}
           alt='headphone'
         />
-        <div
-          className='absolute top-0 right-0 flex justify-center items-center bg-blue-200 w-6 h-6 rounded-full m-2 p-1'
-          onClick={() => context.setCount(context.count + 1)}
-        >
-          <PlusIcon className='h-6 w-6 text-black' />
-        </div>
+        {renderIcon(data.id)}
       </figure>
       <p className='flex justify-between'>
         <span className='text-sm font-light truncate'>{data.title}</span>
