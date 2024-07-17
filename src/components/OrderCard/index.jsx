@@ -24,7 +24,9 @@ const OrderCard = (props) => {
       <div className='flex flex-col items-end gap-2'>
         {/* <button className='font-medium text-gray-500 rounded-sm' type='button'>Remove</button> */}
         <TrashIcon
-          className='h-5 w-5 text-red-500 cursor-pointer'
+          className={`${
+            !handleDeleteProduct ? 'hidden' : ''
+          } h-5 w-5 text-red-500 cursor-pointer`}
           title='Delete product'
           onClick={() => handleDeleteProduct(id)}
         />

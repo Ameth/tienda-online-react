@@ -23,7 +23,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/electronicos'
+            to='/category/electronics'
             className={({ isActive }) => (isActive ? activeStyle : '')}
           >
             Electronicos
@@ -31,7 +31,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/ropa'
+            to='/category/clothing'
             className={({ isActive }) => (isActive ? activeStyle : '')}
           >
             Ropa
@@ -39,7 +39,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/accesorios'
+            to='/category/accesorios'
             className={({ isActive }) => (isActive ? activeStyle : '')}
           >
             Accesorios
@@ -47,7 +47,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/juguetes'
+            to='/category/juguetes'
             className={({ isActive }) => (isActive ? activeStyle : '')}
           >
             Juguetes
@@ -55,7 +55,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/otros'
+            to='/category/otros'
             className={({ isActive }) => (isActive ? activeStyle : '')}
           >
             Otros

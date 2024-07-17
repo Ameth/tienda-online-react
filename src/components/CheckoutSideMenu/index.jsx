@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { ShoppingCartContext } from '../../context'
 import OrderCard from '../OrderCard'
@@ -19,8 +20,10 @@ const CheckoutSideMenu = () => {
 
   const handleCheckout = () => {
     if (context.cartProducts.length > 0) {
+      const date = new Date()
+
       const orderToAdd = {
-        date: '23/04/2024',
+        date: date.toLocaleDateString(),
         products: context.cartProducts,
         cantProducts: context.cartProducts.length,
         totalPrice: totalPrice(context.cartProducts),
@@ -71,14 +74,18 @@ const CheckoutSideMenu = () => {
             ${totalPrice(context.cartProducts)}
           </span>
         </p>
-        <button
-          className={`${
-            context.cartProducts.length === 0 ? 'bg-opacity-50 cursor-not-allowed' : ''
-          } w-full bg-red-500 text-white py-3 rounded-lg text-2xl`}
-          onClick={() => handleCheckout()}
-        >
-          Checkout
-        </button>
+        <Link to='/my-orders/last'>
+          <button
+            className={`${
+              context.cartProducts.length === 0
+                ? 'bg-opacity-50 cursor-not-allowed'
+                : ''
+            } w-full bg-red-500 text-white py-3 rounded-lg text-2xl`}
+            onClick={() => handleCheckout()}
+          >
+            Checkout
+          </button>
+        </Link>
       </div>
     </aside>
   )

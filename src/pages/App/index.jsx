@@ -19,6 +19,10 @@ const AppRoutes = () => {
       element: <Home />,
     },
     {
+      path: '/category/:category',
+      element: <Home />,
+    },
+    {
       path: '/my-account',
       element: <MyAccount />,
     },
@@ -29,6 +33,10 @@ const AppRoutes = () => {
     {
       path: '/my-orders',
       element: <MyOrders />,
+    },
+    {
+      path: '/my-orders/:id',
+      element: <MyOrder />,
     },
     {
       path: '/sign-in',

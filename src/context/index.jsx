@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext()
 
@@ -27,6 +27,58 @@ export const ShoppingCartProvider = ({ children }) => {
   //Lista de ordenes compradas por el usuario
   const [order, setOrder] = useState([])
 
+  //Obtener productos desde la API
+  const URL_API = 'https://fakestoreapi.com/products'
+  const [items, setItems] = useState(null)
+  const [filteredItems, setFilteredItems] = useState(null)
+
+  useEffect(() => {
+    fetch(URL_API)
+      .then((response) => response.json())
+      .then((data) => setItems(data))
+  }, [])
+
+  //Buscar productos por titulo
+  const [searchByTitle, setSearchByTitle] = useState(null)
+
+  //Buscar productos por categoria
+  const [searchByCategory, setSearchByCategory] = useState(null)
+  // console.log(searchByCategory);
+
+  const filterItemsByTitle = (
+    items,
+    searchByTitle,
+    searchByCategory = null
+  ) => {
+    // return items
+    //   ?.filter((item) =>
+    //     item.title?.toLowerCase().includes(searchByTitle?.toLowerCase())
+    //   )
+    //   ?.filter((item) =>
+    //     item.category?.toLowerCase().includes(searchByCategory?.toLowerCase())
+    //   )
+
+    // console.log(items, searchByTitle, searchByCategory)
+
+    return items?.filter(
+      (item) =>
+        (searchByTitle === null ||
+          item.title.toLowerCase().includes(searchByTitle.toLowerCase())) &&
+        (searchByCategory === null ||
+          item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
+    )
+  }
+
+  useEffect(() => {
+    // if (searchByTitle || searchByCategory)
+    setFilteredItems(filterItemsByTitle(items, searchByTitle, searchByCategory))
+    // return () => {
+    //   setSearchByTitle(null)
+    // }
+  }, [items, searchByTitle, searchByCategory])
+
+  console.log('Filtered', filteredItems)
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -44,7 +96,14 @@ export const ShoppingCartProvider = ({ children }) => {
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
         order,
-        setOrder
+        setOrder,
+        items,
+        setItems,
+        searchByTitle,
+        setSearchByTitle,
+        searchByCategory,
+        setSearchByCategory,
+        filteredItems,
       }}
     >
       {children}
