@@ -77,7 +77,7 @@ export const ShoppingCartProvider = ({ children }) => {
     // }
   }, [items, searchByTitle, searchByCategory])
 
-  console.log('Filtered', filteredItems)
+  // console.log('Filtered', filteredItems)
 
   return (
     <ShoppingCartContext.Provider
